@@ -17,3 +17,7 @@ to install the project packages
 to run the migrations folder
 6. ```yarn dev``` 
 to up server
+
+## Postman collection
+
+https://documenter.getpostman.com/view/10081020/UVXerdJN
