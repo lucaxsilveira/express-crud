@@ -8,10 +8,10 @@ import {
 } from "typeorm";
 import { v4 as uuid } from "uuid";
 
-import { Category } from "./Category";
+import Category from "./Category";
 
 @Entity("videos")
-export class Video {
+export default class Video {
     @PrimaryColumn()
     id: string;
 

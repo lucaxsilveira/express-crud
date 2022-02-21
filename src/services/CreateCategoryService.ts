@@ -1,28 +1,30 @@
-import { getRepository } from "typeorm";
-import { Category } from "../entities/Category";
+import { inject, injectable } from "tsyringe";
+import Category from "../entities/typeorm/Category";
+import ICreateCategoryRepository, {
+    CategoryRequest,
+} from "../repositories/interfaces/ICategory";
 
-type CategoryRequest = {
-    name: string;
-    description: string;
-};
-
+@injectable()
 export class CreateCategoryService {
+    constructor(
+        @inject("CreateCategoryRepository")
+        private categoryService: ICreateCategoryRepository
+    ) {}
+
     async execute({
         name,
         description,
     }: CategoryRequest): Promise<Category | Error> {
-        const repo = getRepository(Category);
+        console.log("this.categoryService", this.categoryService);
 
-        if (await repo.findOne({ name })) {
+        if (await this.categoryService.findByName(name)) {
             throw new Error("Category already exists");
         }
 
-        const category = repo.create({
+        const category = this.categoryService.create({
             name,
             description,
         });
-
-        await repo.save(category);
 
         return category;
     }
